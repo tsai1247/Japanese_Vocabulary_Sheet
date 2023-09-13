@@ -17,7 +17,7 @@ except FileNotFoundError:
 
 # 創建主視窗
 root = tk.Tk()
-root.title("3*n 列表")
+root.title("日文單字假名紀錄表")
 
 # 设置全局字体大小
 font_style = ttk.Style()
