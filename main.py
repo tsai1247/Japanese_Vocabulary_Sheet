@@ -2,6 +2,13 @@ import tkinter as tk
 from tkinter import ttk
 import json
 
+# 讀取或初始化數據
+try:
+    with open("data.json", "r") as json_file:
+        data = json.load(json_file)
+except FileNotFoundError:
+    data = []
+
 # 創建主視窗
 root = tk.Tk()
 root.title("3*n 列表")
@@ -28,6 +35,10 @@ label3 = tk.Label(root, text="Column 3:")
 label3.pack()
 entry3 = tk.Entry(root)
 entry3.pack()
+
+# 初始化表格中的數據
+for row_data in data:
+    tree.insert('', 'end', values=row_data)
 
 # 添加行的函數
 def add_row():
