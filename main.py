@@ -132,8 +132,23 @@ entry1.bind("<Tab>", lambda event=None: add_row())
 entry2.bind("<Tab>", lambda event=None: add_row())
 entry3.bind("<Tab>", lambda event=None: add_row())
 
+# 複製內容到輸入框
+def copy_to_entry(event):
+    item = tree.selection()[0]
+    values = tree.item(item, 'values')
+
+    entry1.delete(0, 'end')
+    entry1.insert(0, values[0])
+
+    entry2.delete(0, 'end')
+    entry2.insert(0, values[1])
+
+    entry3.delete(0, 'end')
+    entry3.insert(0, values[2])
+
 # 绑定双击事件以删除行
 tree.bind("<Delete>", delete_row)
+tree.bind("<Double-1>", copy_to_entry)
 
 # 初始化表格中的数据
 for i, row_data in enumerate(data, start=1):
