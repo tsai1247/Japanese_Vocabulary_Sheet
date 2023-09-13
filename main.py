@@ -78,7 +78,7 @@ def add_row():
     else:
         focus_next = root.focus_get().tk_focusNext()
         if focus_next:
-            if type(focus_next) is tk.Button:
+            if type(focus_next) is not tk.Entry:
                 entry3.focus_set()
             else:
                 focus_next.focus_set()
@@ -123,15 +123,14 @@ def save_to_json():
     with open("data.json", "w", encoding="utf-8") as json_file:
         json.dump(data, json_file, ensure_ascii=False, indent=4)
 
-
-# 添加行的按钮
-add_button = tk.Button(input_frame, text="添加行", command=add_row, font=("Arial", 14))
-add_button.grid(row=3, column=0, columnspan=2, padx=5, pady=10, sticky="nsew")  # 使用grid排版
-
 # 绑定 Enter 键的事件处理程序以保存数据
 entry1.bind("<Return>", lambda event=None: add_row())
 entry2.bind("<Return>", lambda event=None: add_row())
 entry3.bind("<Return>", lambda event=None: add_row())
+
+entry1.bind("<Tab>", lambda event=None: add_row())
+entry2.bind("<Tab>", lambda event=None: add_row())
+entry3.bind("<Tab>", lambda event=None: add_row())
 
 # 绑定双击事件以删除行
 tree.bind("<Delete>", delete_row)
