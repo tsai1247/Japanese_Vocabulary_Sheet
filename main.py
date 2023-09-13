@@ -55,8 +55,7 @@ def add_row():
         values = [value1, value2, value3]
         tree.insert('', 'end', values=values)
         save_to_json()
-    else:
-        # 輸入欄位為空或只有空白字符，不儲存資料
+        # 清除輸入框的文字
         entry1.delete(0, 'end')
         entry2.delete(0, 'end')
         entry3.delete(0, 'end')
