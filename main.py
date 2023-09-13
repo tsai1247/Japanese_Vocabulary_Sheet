@@ -23,23 +23,23 @@ tree.pack()
 
 # 創建一個框架來容納輸入框和添加按鈕
 input_frame = tk.Frame(root)
-input_frame.pack()
+input_frame.pack(pady=10)  # 增加垂直間距
 
 # 創建輸入框
 label1 = tk.Label(input_frame, text="Column 1:")
-label1.grid(row=0, column=0)
+label1.grid(row=0, column=0, padx=5)  # 增加水平間距
 entry1 = tk.Entry(input_frame)
-entry1.grid(row=0, column=1)
+entry1.grid(row=0, column=1, padx=5)  # 增加水平間距
 
 label2 = tk.Label(input_frame, text="Column 2:")
-label2.grid(row=0, column=2)
+label2.grid(row=0, column=2, padx=5)  # 增加水平間距
 entry2 = tk.Entry(input_frame)
-entry2.grid(row=0, column=3)
+entry2.grid(row=0, column=3, padx=5)  # 增加水平間距
 
 label3 = tk.Label(input_frame, text="Column 3:")
-label3.grid(row=0, column=4)
+label3.grid(row=0, column=4, padx=5)  # 增加水平間距
 entry3 = tk.Entry(input_frame)
-entry3.grid(row=0, column=5)
+entry3.grid(row=0, column=5, padx=5)  # 增加水平間距
 
 # 添加行的函數
 def add_row():
@@ -77,11 +77,11 @@ def save_to_json():
 
 # 添加行的按鈕
 add_button = tk.Button(input_frame, text="添加行", command=add_row)
-add_button.grid(row=0, column=6)
+add_button.grid(row=0, column=6, padx=5)  # 增加水平間距
 
 # 刪除行的按鈕
 delete_button = tk.Button(input_frame, text="刪除選定行", command=delete_row)
-delete_button.grid(row=0, column=7)
+delete_button.grid(row=0, column=7, padx=5)  # 增加水平間距
 
 # 初始化表格中的數據
 for row_data in data:
