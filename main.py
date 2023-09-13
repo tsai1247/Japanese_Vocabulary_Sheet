@@ -3,13 +3,13 @@ from tkinter import ttk
 import json
 
 # 列名的字符串常量
-COLUMN_1 = "Column 1"
-COLUMN_2 = "Column 2"
-COLUMN_3 = "Column 3"
+COLUMN_1 = "中文"
+COLUMN_2 = "漢字"
+COLUMN_3 = "日文"
 
 # 讀取或初始化數據
 try:
-    with open("data.json", "r") as json_file:
+    with open("data.json", "r", encoding="utf-8") as json_file:
         data = json.load(json_file)
 except FileNotFoundError:
     data = []
@@ -76,8 +76,8 @@ def save_to_json():
         if values:
             data.append(values)
     
-    with open("data.json", "w") as json_file:
-        json.dump(data, json_file)
+    with open("data.json", "w", encoding="utf-8") as json_file:
+        json.dump(data, json_file, ensure_ascii=False, indent=4)
 
 # 添加行的按鈕
 add_button = tk.Button(input_frame, text="添加行", command=add_row)
