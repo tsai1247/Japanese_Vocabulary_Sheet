@@ -61,12 +61,12 @@ entry3 = ttk.Entry(input_frame, font=("Arial", 14), style="Entry.TEntry")
 entry3.grid(row=2, column=1, padx=5, pady=5, sticky="w")  # 使用grid排版
 
 # 添加行的函数
-def add_row():
+def add_row(just_tab=False):
     value1 = entry1.get().strip()
     value2 = entry2.get().strip()
     value3 = entry3.get().strip()
     
-    if value1 and value2 and value3:  # 检查是否都有输入值
+    if value1 and value2 and value3 and not just_tab:  # 检查是否都有输入值
         values = [value1, value2, value3]
         tree.insert('', 'end', values=values)
         save_to_json()
@@ -76,13 +76,13 @@ def add_row():
         entry3.delete(0, 'end')
         entry1.focus_set()
     else:
+        filter_row()
         focus_next = root.focus_get().tk_focusNext()
         if focus_next:
             if type(focus_next) is not tk.Entry:
                 entry3.focus_set()
             else:
                 focus_next.focus_set()
-        filter_row()
 
 # 删除行的函数
 def delete_row(event):
@@ -112,6 +112,10 @@ def filter_row():
                 tree.insert('', 'end', values=row_data)
                 break
 
+    treeview_values = tree.get_children()
+    if len(treeview_values):
+        tree.selection_set(treeview_values[0])
+
 # 将新增的内容保存到 JSON 文件中
 def save_to_json():
     data = []
@@ -128,9 +132,9 @@ entry1.bind("<Return>", lambda event=None: add_row())
 entry2.bind("<Return>", lambda event=None: add_row())
 entry3.bind("<Return>", lambda event=None: add_row())
 
-entry1.bind("<Tab>", lambda event=None: add_row())
-entry2.bind("<Tab>", lambda event=None: add_row())
-entry3.bind("<Tab>", lambda event=None: add_row())
+entry1.bind("<Tab>", lambda event=None: add_row(True))
+entry2.bind("<Tab>", lambda event=None: add_row(True))
+entry3.bind("<Tab>", lambda event=None: add_row(True))
 
 # 複製內容到輸入框
 def copy_to_entry(event):
