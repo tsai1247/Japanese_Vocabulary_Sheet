@@ -2,6 +2,11 @@ import tkinter as tk
 from tkinter import ttk
 import json
 
+# 列名的字符串常量
+COLUMN_1 = "Column 1"
+COLUMN_2 = "Column 2"
+COLUMN_3 = "Column 3"
+
 # 讀取或初始化數據
 try:
     with open("data.json", "r") as json_file:
@@ -14,10 +19,10 @@ root = tk.Tk()
 root.title("3*n 列表")
 
 # 創建表格
-tree = ttk.Treeview(root, columns=("Column 1", "Column 2", "Column 3", "操作"), show="headings")
-tree.heading("Column 1", text="Column 1")
-tree.heading("Column 2", text="Column 2")
-tree.heading("Column 3", text="Column 3")
+tree = ttk.Treeview(root, columns=(COLUMN_1, COLUMN_2, COLUMN_3, "操作"), show="headings")
+tree.heading(COLUMN_1, text=COLUMN_1)
+tree.heading(COLUMN_2, text=COLUMN_2)
+tree.heading(COLUMN_3, text=COLUMN_3)
 tree.heading("操作", text="操作")
 tree.pack()
 
@@ -26,17 +31,17 @@ input_frame = tk.Frame(root)
 input_frame.pack(pady=10)  # 增加垂直間距
 
 # 創建輸入框
-label1 = tk.Label(input_frame, text="Column 1:")
+label1 = tk.Label(input_frame, text=f"{COLUMN_1}:")
 label1.grid(row=0, column=0, padx=5)  # 增加水平間距
 entry1 = tk.Entry(input_frame)
 entry1.grid(row=0, column=1, padx=5)  # 增加水平間距
 
-label2 = tk.Label(input_frame, text="Column 2:")
+label2 = tk.Label(input_frame, text=f"{COLUMN_2}:")
 label2.grid(row=0, column=2, padx=5)  # 增加水平間距
 entry2 = tk.Entry(input_frame)
 entry2.grid(row=0, column=3, padx=5)  # 增加水平間距
 
-label3 = tk.Label(input_frame, text="Column 3:")
+label3 = tk.Label(input_frame, text=f"{COLUMN_3}:")
 label3.grid(row=0, column=4, padx=5)  # 增加水平間距
 entry3 = tk.Entry(input_frame)
 entry3.grid(row=0, column=5, padx=5)  # 增加水平間距
