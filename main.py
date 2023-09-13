@@ -43,9 +43,19 @@ entry3.grid(row=0, column=5)
 
 # 添加行的函數
 def add_row():
-    values = [entry1.get(), entry2.get(), entry3.get()]
-    tree.insert('', 'end', values=values)
-    save_to_json()
+    value1 = entry1.get().strip()
+    value2 = entry2.get().strip()
+    value3 = entry3.get().strip()
+    
+    if value1 and value2 and value3:  # 檢查是否都有輸入值
+        values = [value1, value2, value3]
+        tree.insert('', 'end', values=values)
+        save_to_json()
+    else:
+        # 輸入欄位為空或只有空白字符，不儲存資料
+        entry1.delete(0, 'end')
+        entry2.delete(0, 'end')
+        entry3.delete(0, 'end')
 
 # 刪除行的函數
 def delete_row():
