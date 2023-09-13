@@ -34,11 +34,11 @@ tree = ttk.Treeview(root, columns=(COLUMN_1, COLUMN_2, COLUMN_3), show="headings
 tree.heading(COLUMN_1, text=COLUMN_1, anchor="center")
 tree.heading(COLUMN_2, text=COLUMN_2, anchor="center")
 tree.heading(COLUMN_3, text=COLUMN_3, anchor="center")
-tree.pack()
+tree.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")  # 使用grid排版
 
 # 创建一个框架来容纳输入框和添加按钮
 input_frame = tk.Frame(root)
-input_frame.pack(pady=10)  # 增加垂直间距
+input_frame.grid(row=0, column=1, padx=10, pady=10, sticky="n")  # 使用grid排版
 
 # 创建输入框样式
 entry_style = ttk.Style()
@@ -46,19 +46,19 @@ entry_style.configure("Entry.TEntry", font=("Arial", 14))  # 设置输入框的�
 
 # 创建输入框
 label1 = tk.Label(input_frame, text=f"{COLUMN_1}:", font=("Arial", 14))
-label1.grid(row=0, column=0, padx=5)  # 增加水平间距
+label1.grid(row=0, column=0, padx=5, pady=5, sticky="e")  # 使用grid排版
 entry1 = ttk.Entry(input_frame, font=("Arial", 14), style="Entry.TEntry")
-entry1.grid(row=0, column=1, padx=5)  # 增加水平间距
+entry1.grid(row=0, column=1, padx=5, pady=5, sticky="w")  # 使用grid排版
 
 label2 = tk.Label(input_frame, text=f"{COLUMN_2}:", font=("Arial", 14))
-label2.grid(row=0, column=2, padx=5)  # 增加水平间距
+label2.grid(row=1, column=0, padx=5, pady=5, sticky="e")  # 使用grid排版
 entry2 = ttk.Entry(input_frame, font=("Arial", 14), style="Entry.TEntry")
-entry2.grid(row=0, column=3, padx=5)  # 增加水平间距
+entry2.grid(row=1, column=1, padx=5, pady=5, sticky="w")  # 使用grid排版
 
 label3 = tk.Label(input_frame, text=f"{COLUMN_3}:", font=("Arial", 14))
-label3.grid(row=0, column=4, padx=5)  # 增加水平间距
+label3.grid(row=2, column=0, padx=5, pady=5, sticky="e")  # 使用grid排版
 entry3 = ttk.Entry(input_frame, font=("Arial", 14), style="Entry.TEntry")
-entry3.grid(row=0, column=5, padx=5)  # 增加水平间距
+entry3.grid(row=2, column=1, padx=5, pady=5, sticky="w")  # 使用grid排版
 
 # 添加行的函数
 def add_row():
@@ -76,13 +76,14 @@ def add_row():
         entry3.delete(0, 'end')
 
 # 删除行的函数
-def delete_row(event=None):
+def delete_row(event):
     selected_items = tree.selection()
-    if event is None or messagebox.askyesno("确认删除", "您确定要删除此行吗？"):
-        if selected_items:
-            for item in selected_items:
-                tree.delete(item)
-            save_to_json()
+    # 弹出确认警告对话框
+    response = messagebox.askyesno("确认删除", "您确定要删除此行吗？")
+    if selected_items:
+        for item in selected_items:
+            tree.delete(item)
+        save_to_json()
 
 # 将新增的内容保存到 JSON 文件中
 def save_to_json():
@@ -97,23 +98,45 @@ def save_to_json():
 
 # 添加行的按钮
 add_button = tk.Button(input_frame, text="添加行", command=add_row, font=("Arial", 14))
-add_button.grid(row=0, column=6, padx=5)  # 增加水平间距
-
-# 删除行的按钮
-delete_button = tk.Button(input_frame, text="删除选定行", command=delete_row, font=("Arial", 14))
-delete_button.grid(row=0, column=7, padx=5)  # 增加水平间距
+add_button.grid(row=3, column=0, columnspan=2, padx=5, pady=10, sticky="nsew")  # 使用grid排版
 
 # 绑定 Enter 键的事件处理程序以保存数据
 entry1.bind("<Return>", lambda event=None: add_row())
 entry2.bind("<Return>", lambda event=None: add_row())
 entry3.bind("<Return>", lambda event=None: add_row())
 
-# 绑定双击行来删除行
-tree.bind("<Double-1>", delete_row)
+# 绑定双击事件以删除行
+tree.bind("<Delete>", delete_row)
 
 # 初始化表格中的数据
 for i, row_data in enumerate(data, start=1):
     tree.insert('', 'end', values=row_data)
+
+
+# 创建一个框架来容纳输入框和添加按钮
+display_frame = tk.Frame(root)
+display_frame.grid(row=0, column=2, padx=10, pady=10, sticky="n")  # 使用grid排版
+
+# 添加用于显示汉字的 Label 和小字标注的 Label
+japanese_label = tk.Label(display_frame, text="", font=("Arial", 24))
+japanese_label.pack()
+# japanese_label.grid(row=0, column=0, padx=10, sticky="s")  # 使用grid排版
+hanzi_label = tk.Label(display_frame, text="", font=("Arial", 60))
+hanzi_label.pack()
+# hanzi_label.grid(row=1, column=0, padx=10, sticky="n")  # 使用grid排版
+
+# 当选择项发生变化时更新汉字和日文标签
+def update_labels(event):
+    selected_item = tree.selection()[0] if tree.selection() else ""
+    values = tree.item(selected_item, "values") if selected_item else []
+    
+    hanzi = values[1] if values else ""
+    japanese = values[2] if values else ""
+    
+    hanzi_label.config(text=hanzi)
+    japanese_label.config(text=f"{japanese}")
+
+tree.bind("<<TreeviewSelect>>", update_labels)
 
 # 启动应用程序的主循环
 root.mainloop()
