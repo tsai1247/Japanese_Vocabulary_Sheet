@@ -62,9 +62,10 @@ def add_row():
 
 # 刪除行的函數
 def delete_row():
-    selected_item = tree.selection()
-    if selected_item:
-        tree.delete(selected_item)
+    selected_items = tree.selection()
+    if selected_items:
+        for item in selected_items:
+            tree.delete(item)
         save_to_json()
 
 # 將新增的內容保存到 JSON 文件中
