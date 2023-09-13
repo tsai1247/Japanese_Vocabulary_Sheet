@@ -1,11 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
+import json
 
-def add_row():
-    values = [entry1.get(), entry2.get(), entry3.get()]
-    tree.insert('', 'end', values=values)
-
-# 建立主視窗
+# 創建主視窗
 root = tk.Tk()
 root.title("3*n 列表")
 
@@ -31,6 +28,23 @@ label3 = tk.Label(root, text="Column 3:")
 label3.pack()
 entry3 = tk.Entry(root)
 entry3.pack()
+
+# 添加行的函數
+def add_row():
+    values = [entry1.get(), entry2.get(), entry3.get()]
+    tree.insert('', 'end', values=values)
+    save_to_json()
+
+# 將新增的內容保存到 JSON 文件中
+def save_to_json():
+    data = []
+    for item in tree.get_children():
+        values = tree.item(item, 'values')
+        if values:
+            data.append(values)
+    
+    with open("data.json", "w") as json_file:
+        json.dump(data, json_file)
 
 # 添加行的按鈕
 add_button = tk.Button(root, text="添加行", command=add_row)
