@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import json
+from tkinter import messagebox  # 添加 messagebox 模块
 
 # 列名的字符串常量
 COLUMN_1 = "中文"
@@ -75,12 +76,13 @@ def add_row():
         entry3.delete(0, 'end')
 
 # 删除行的函数
-def delete_row():
+def delete_row(event=None):
     selected_items = tree.selection()
-    if selected_items:
-        for item in selected_items:
-            tree.delete(item)
-        save_to_json()
+    if event is None or messagebox.askyesno("确认删除", "您确定要删除此行吗？"):
+        if selected_items:
+            for item in selected_items:
+                tree.delete(item)
+            save_to_json()
 
 # 将新增的内容保存到 JSON 文件中
 def save_to_json():
@@ -105,6 +107,9 @@ delete_button.grid(row=0, column=7, padx=5)  # 增加水平间距
 entry1.bind("<Return>", lambda event=None: add_row())
 entry2.bind("<Return>", lambda event=None: add_row())
 entry3.bind("<Return>", lambda event=None: add_row())
+
+# 绑定双击行来删除行
+tree.bind("<Double-1>", delete_row)
 
 # 初始化表格中的数据
 for i, row_data in enumerate(data, start=1):
