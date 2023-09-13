@@ -87,6 +87,11 @@ add_button.grid(row=0, column=6, padx=5)  # 增加水平間距
 delete_button = tk.Button(input_frame, text="刪除選定行", command=delete_row)
 delete_button.grid(row=0, column=7, padx=5)  # 增加水平間距
 
+# 绑定 Enter 键的事件处理程序以保存数据
+entry1.bind("<Return>", lambda event=None: add_row())
+entry2.bind("<Return>", lambda event=None: add_row())
+entry3.bind("<Return>", lambda event=None: add_row())
+
 # 初始化表格中的數據
 for row_data in data:
     tree.insert('', 'end', values=row_data)
