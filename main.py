@@ -39,11 +39,11 @@ entry3.pack()
 
 # 初始化表格中的數據
 for row_data in data:
-    tree.insert('', 'end', values=row_data + ("刪除",))
+    tree.insert('', 'end', values=row_data)
 
 # 添加行的函數
 def add_row():
-    values = (entry1.get(), entry2.get(), entry3.get(), "刪除")
+    values = [entry1.get(), entry2.get(), entry3.get(), "刪除"]
     tree.insert('', 'end', values=values)
     save_to_json()
 
