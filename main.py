@@ -79,6 +79,7 @@ def add_row():
         focus_next = root.focus_get().tk_focusNext()
         if focus_next:
             focus_next.focus_set()
+        filter_row()
 
 # 删除行的函数
 def delete_row(event):
@@ -90,6 +91,24 @@ def delete_row(event):
             tree.delete(item)
         save_to_json()
 
+# 篩選
+def filter_row():
+    values = [
+        entry1.get().strip(),
+        entry2.get().strip(),
+        entry3.get().strip()
+    ]
+    allempty = not(values[0] or values[1] or values[2])
+    tree.delete(*tree.get_children())
+    for i, row_data in enumerate(data, start=1):
+        if allempty:
+            tree.insert('', 'end', values=row_data)
+            continue
+        for j in range(len(values)):
+            if values[j] and values[j] in row_data[j]:
+                tree.insert('', 'end', values=row_data)
+                break
+
 # 将新增的内容保存到 JSON 文件中
 def save_to_json():
     data = []
@@ -100,6 +119,7 @@ def save_to_json():
     
     with open("data.json", "w", encoding="utf-8") as json_file:
         json.dump(data, json_file, ensure_ascii=False, indent=4)
+
 
 # 添加行的按钮
 add_button = tk.Button(input_frame, text="添加行", command=add_row, font=("Arial", 14))
