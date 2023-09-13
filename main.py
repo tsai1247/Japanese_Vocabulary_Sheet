@@ -21,7 +21,7 @@ tree.heading("Column 3", text="Column 3")
 tree.heading("操作", text="操作")
 tree.pack()
 
-# 創建一個框架來容納輸入框
+# 創建一個框架來容納輸入框和添加按鈕
 input_frame = tk.Frame(root)
 input_frame.pack()
 
@@ -41,13 +41,9 @@ label3.grid(row=0, column=4)
 entry3 = tk.Entry(input_frame)
 entry3.grid(row=0, column=5)
 
-# 初始化表格中的數據
-for row_data in data:
-    tree.insert('', 'end', values=row_data)
-
 # 添加行的函數
 def add_row():
-    values = [entry1.get(), entry2.get(), entry3.get(), "刪除"]
+    values = [entry1.get(), entry2.get(), entry3.get()]
     tree.insert('', 'end', values=values)
     save_to_json()
 
@@ -62,7 +58,7 @@ def delete_row():
 def save_to_json():
     data = []
     for item in tree.get_children():
-        values = tree.item(item, 'values')[:-1]  # 去掉最後一個 "刪除"
+        values = tree.item(item, 'values')
         if values:
             data.append(values)
     
@@ -70,12 +66,16 @@ def save_to_json():
         json.dump(data, json_file)
 
 # 添加行的按鈕
-add_button = tk.Button(root, text="添加行", command=add_row)
-add_button.pack()
+add_button = tk.Button(input_frame, text="添加行", command=add_row)
+add_button.grid(row=0, column=6)
 
 # 刪除行的按鈕
-delete_button = tk.Button(root, text="刪除選定行", command=delete_row)
-delete_button.pack()
+delete_button = tk.Button(input_frame, text="刪除選定行", command=delete_row)
+delete_button.grid(row=0, column=7)
+
+# 初始化表格中的數據
+for row_data in data:
+    tree.insert('', 'end', values=row_data)
 
 # 啟動應用程序的主迴圈
 root.mainloop()
