@@ -19,11 +19,10 @@ root = tk.Tk()
 root.title("3*n 列表")
 
 # 創建表格
-tree = ttk.Treeview(root, columns=(COLUMN_1, COLUMN_2, COLUMN_3, "操作"), show="headings")
+tree = ttk.Treeview(root, columns=(COLUMN_1, COLUMN_2, COLUMN_3), show="headings")
 tree.heading(COLUMN_1, text=COLUMN_1)
 tree.heading(COLUMN_2, text=COLUMN_2)
 tree.heading(COLUMN_3, text=COLUMN_3)
-tree.heading("操作", text="操作")
 tree.pack()
 
 # 創建一個框架來容納輸入框和添加按鈕
