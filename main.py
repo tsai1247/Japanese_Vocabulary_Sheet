@@ -21,21 +21,25 @@ tree.heading("Column 3", text="Column 3")
 tree.heading("操作", text="操作")
 tree.pack()
 
+# 創建一個框架來容納輸入框
+input_frame = tk.Frame(root)
+input_frame.pack()
+
 # 創建輸入框
-label1 = tk.Label(root, text="Column 1:")
-label1.pack()
-entry1 = tk.Entry(root)
-entry1.pack()
+label1 = tk.Label(input_frame, text="Column 1:")
+label1.grid(row=0, column=0)
+entry1 = tk.Entry(input_frame)
+entry1.grid(row=0, column=1)
 
-label2 = tk.Label(root, text="Column 2:")
-label2.pack()
-entry2 = tk.Entry(root)
-entry2.pack()
+label2 = tk.Label(input_frame, text="Column 2:")
+label2.grid(row=0, column=2)
+entry2 = tk.Entry(input_frame)
+entry2.grid(row=0, column=3)
 
-label3 = tk.Label(root, text="Column 3:")
-label3.pack()
-entry3 = tk.Entry(root)
-entry3.pack()
+label3 = tk.Label(input_frame, text="Column 3:")
+label3.grid(row=0, column=4)
+entry3 = tk.Entry(input_frame)
+entry3.grid(row=0, column=5)
 
 # 初始化表格中的數據
 for row_data in data:
