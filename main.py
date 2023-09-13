@@ -74,11 +74,14 @@ def add_row():
         entry1.delete(0, 'end')
         entry2.delete(0, 'end')
         entry3.delete(0, 'end')
-        entry1.focus()
+        entry1.focus_set()
     else:
         focus_next = root.focus_get().tk_focusNext()
         if focus_next:
-            focus_next.focus_set()
+            if type(focus_next) is tk.Button:
+                entry3.focus_set()
+            else:
+                focus_next.focus_set()
         filter_row()
 
 # 删除行的函数
